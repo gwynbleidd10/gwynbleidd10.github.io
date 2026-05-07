@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Настройка плагина для Chrome | Пошаговое руководство (RU/EN)</title>
-    <!-- Google Fonts & простой сброс стилей -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>Chrome плагин: настройка | 8 шагов (RU/EN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,7 +17,6 @@
             background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
             color: #1a2c3e;
             line-height: 1.5;
-            scroll-behavior: smooth;
         }
 
         .container {
@@ -27,21 +25,21 @@
             padding: 2rem 1.5rem 4rem;
         }
 
-        /* header с переключателем языков */
+        /* Language switcher */
         .lang-bar {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         .lang-switch {
-            background: #ffffffcc;
+            background: rgba(255,255,255,0.8);
             backdrop-filter: blur(8px);
             border-radius: 100px;
             padding: 0.3rem;
             display: inline-flex;
             gap: 0.3rem;
-            border: 1px solid rgba(30, 90, 138, 0.2);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid rgba(30, 90, 138, 0.25);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         .lang-btn {
             border: none;
@@ -58,7 +56,7 @@
         .lang-btn.active {
             background: #1e5a8a;
             color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .lang-btn:not(.active):hover {
             background: #e2e8f0;
@@ -99,6 +97,7 @@
             font-weight: 400;
         }
 
+        /* Steps grid */
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -107,13 +106,13 @@
         }
 
         .step-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(2px);
             border-radius: 2rem;
-            padding: 1.8rem 1.4rem 1.8rem;
+            padding: 1.8rem 1.4rem;
             box-shadow: 0 12px 28px -8px rgba(0, 32, 64, 0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.7);
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -121,7 +120,7 @@
         .step-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 24px 40px -12px rgba(0, 44, 75, 0.15);
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             border-color: rgba(59, 130, 246, 0.3);
         }
 
@@ -129,8 +128,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             background: #1e5a8a;
             color: white;
             font-weight: 700;
@@ -140,8 +139,8 @@
             box-shadow: 0 6px 12px -6px rgba(0,0,0,0.1);
         }
         .step-title {
-            font-size: 1.45rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             margin-bottom: 0.9rem;
             color: #0b2b3f;
             line-height: 1.3;
@@ -163,18 +162,17 @@
             border-left: 3px solid #3b82f6;
         }
         .tip-icon {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             margin-top: 0.75rem;
             color: #5f7f9e;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-
         .info-panel {
             background: white;
             border-radius: 2rem;
-            padding: 2rem 2rem;
+            padding: 1.8rem 2rem;
             margin-top: 1rem;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             border: 1px solid #e4edf5;
@@ -182,7 +180,7 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
         .support-text {
             font-weight: 500;
@@ -194,6 +192,11 @@
             border-radius: 30px;
             font-family: monospace;
             font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .support-text span:hover {
+            background: #d9e6f5;
         }
         .chrome-badge {
             display: flex;
@@ -208,10 +211,9 @@
             background: #e9f0f5;
             border-radius: 1.5rem;
             padding: 1.2rem 1.8rem;
-            transition: all 0.1s;
         }
         .faq-title {
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.6rem;
         }
         .faq-grid {
@@ -229,32 +231,25 @@
             border-top: 1px solid rgba(0,0,0,0.05);
             padding-top: 2rem;
         }
-
         @media (max-width: 1024px) {
-            .steps-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .hero h1 { font-size: 2.2rem; }
         }
         @media (max-width: 640px) {
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                padding: 1.2rem 1rem 2rem;
-            }
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-            .step-card {
-                padding: 1.4rem;
-            }
+            .steps-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem 1rem 2rem; }
+            .hero h1 { font-size: 1.9rem; }
+            .step-card { padding: 1.4rem; }
         }
         .copy-hint {
             cursor: pointer;
+            transition: 0.1s;
+        }
+        code {
+            background: #eef2fa;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -262,7 +257,7 @@
 <div class="container">
     <div class="lang-bar">
         <div class="lang-switch">
-            <button class="lang-btn active" data-lang="ru">🇷🇺 Русский</button>
+            <button class="lang-btn" data-lang="ru">🇷🇺 Русский</button>
             <button class="lang-btn" data-lang="en">🇬🇧 English</button>
         </div>
     </div>
@@ -273,16 +268,13 @@
         <p id="heroDesc">Установите расширение за 3 минуты и раскройте все возможности. Следуйте инструкции ниже.</p>
     </div>
 
-    <!-- Сетка 8 шагов -->
-    <div class="steps-grid" id="stepsGrid">
-        <!-- Карточки будут заполняться динамически через JS, но для надежности оставим статическую разметку с data-атрибутами -->
-        <!-- 8 шагов: каждый содержит номер + уникальные ключи -->
-    </div>
+    <!-- Сетка для 8 шагов будет заполнена динамически -->
+    <div class="steps-grid" id="stepsGrid"></div>
 
-    <div class="info-panel" id="infoPanel">
+    <div class="info-panel">
         <div class="support-text" id="supportText">
-            📖 <strong>Нужна помощь?</strong> Если у вас возникли сложности на любом из 8 шагов, проверьте:
-            <span>chrome://extensions</span> и режим разработчика.
+            📖 <strong>Нужна помощь?</strong> Если возникли сложности, проверьте:
+            <span id="extLinkSpan">chrome://extensions</span> и режим разработчика.
         </div>
         <div class="chrome-badge">
             <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,27 +299,27 @@
     </div>
 
     <footer>
-        <p id="footerText">© 2025 Chrome Plugin Guide · Бесплатный лендинг с инструкцией. Версия 2.0 · Все 8 шагов проверены.</p>
-        <p style="margin-top: 0.5rem;" id="footerNote">📎 Для публикации на GitHub Pages просто разместите этот файл как index.html</p>
+        <p id="footerText">© 2025 Chrome Plugin Guide · Бесплатный лендинг. Версия 2.0 · 8 шагов проверены.</p>
+        <p style="margin-top: 0.5rem;" id="footerNote">📎 Для публикации на GitHub Pages разместите как index.html</p>
     </footer>
 </div>
 
 <script>
-    // Мультиязычный контент: русский / английский
+    // ---------- ПОЛНЫЕ ДАННЫЕ ДЛЯ 8 ШАГОВ (RU / EN) ----------
     const translations = {
         ru: {
             heroBadge: "⚡ Официальное руководство",
             heroTitle: "Настройка плагина для Chrome<br>в 8 простых шагов",
             heroDesc: "Установите расширение за 3 минуты и раскройте все возможности. Следуйте инструкции ниже.",
-            supportText: "📖 <strong>Нужна помощь?</strong> Если у вас возникли сложности на любом из 8 шагов, проверьте: <span>chrome://extensions</span> и режим разработчика.",
+            supportText: "📖 <strong>Нужна помощь?</strong> Если возникли сложности, проверьте:",
             chromeVersionText: "Поддерживается Chrome 88+",
             faqTitle: "💬 Что ещё нужно знать о плагине?",
             faq1: "✔ Работает в автономном режиме",
             faq2: "✔ Поддержка темной темы",
             faq3: "✔ Автоматические обновления (вручную через перезагрузку)",
             faq4: "✔ Не собирает личные данные",
-            footerText: "© 2025 Chrome Plugin Guide · Бесплатный лендинг с инструкцией. Версия 2.0 · Все 8 шагов проверены.",
-            footerNote: "📎 Для публикации на GitHub Pages просто разместите этот файл как index.html",
+            footerText: "© 2025 Chrome Plugin Guide · Бесплатный лендинг. Версия 2.0 · 8 шагов проверены.",
+            footerNote: "📎 Для публикации на GitHub Pages разместите как index.html",
             steps: [
                 { title: "Скачайте архив", desc: "Перейдите на официальную страницу плагина и загрузите последнюю версию расширения в формате <strong>.zip</strong> или <strong>.crx</strong>.", detail: "📁 Файл: \"chrome-plugin-v2.4.zip\"", tip: "💡 Совет: сохраните архив в удобную папку" },
                 { title: "Распакуйте файлы", desc: "Извлеките содержимое архива в отдельную папку. Убедитесь, что внутри есть <code>manifest.json</code> и другие ресурсы.", detail: "🗂️ Папка: \"my_chrome_extension\"", tip: "📌 Рекомендуется не удалять папку после установки" },
@@ -343,15 +335,15 @@
             heroBadge: "⚡ Official Guide",
             heroTitle: "Chrome Plugin Setup<br>in 8 Simple Steps",
             heroDesc: "Install the extension in 3 minutes and unlock all features. Follow the instructions below.",
-            supportText: "📖 <strong>Need help?</strong> If you face any issues in any of the 8 steps, check: <span>chrome://extensions</span> and Developer mode.",
+            supportText: "📖 <strong>Need help?</strong> If you face any issues, check:",
             chromeVersionText: "Supports Chrome 88+",
             faqTitle: "💬 What else should you know about the plugin?",
             faq1: "✔ Works offline",
             faq2: "✔ Dark theme support",
             faq3: "✔ Automatic updates (manual reload required)",
             faq4: "✔ No personal data collection",
-            footerText: "© 2025 Chrome Plugin Guide · Free landing page with instructions. Version 2.0 · All 8 steps verified.",
-            footerNote: "📎 To publish on GitHub Pages, simply place this file as index.html",
+            footerText: "© 2025 Chrome Plugin Guide · Free landing page. Version 2.0 · All 8 steps verified.",
+            footerNote: "📎 To publish on GitHub Pages, save this file as index.html",
             steps: [
                 { title: "Download the archive", desc: "Go to the official plugin page and download the latest version of the extension in <strong>.zip</strong> or <strong>.crx</strong> format.", detail: "📁 File: \"chrome-plugin-v2.4.zip\"", tip: "💡 Tip: save the archive to a convenient folder" },
                 { title: "Extract files", desc: "Unzip the archive contents into a separate folder. Make sure <code>manifest.json</code> and other resources are inside.", detail: "🗂️ Folder: \"my_chrome_extension\"", tip: "📌 It is recommended not to delete the folder after installation" },
@@ -367,40 +359,86 @@
 
     let currentLang = 'ru';
 
-    function buildSteps(langData) {
+    // Функция рендеринга шагов (отрисовывает карточки)
+    function renderSteps(langData) {
         const stepsArray = langData.steps;
-        const grid = document.getElementById('stepsGrid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        stepsArray.forEach((step, idx) => {
+        const gridContainer = document.getElementById('stepsGrid');
+        if (!gridContainer) return;
+        gridContainer.innerHTML = '';
+        for (let i = 0; i < stepsArray.length; i++) {
+            const step = stepsArray[i];
+            const stepNumber = i + 1;
             const card = document.createElement('div');
             card.className = 'step-card';
-            const number = idx + 1;
             card.innerHTML = `
-                <div class="step-number">${number}</div>
+                <div class="step-number">${stepNumber}</div>
                 <div class="step-title">${step.title}</div>
                 <div class="step-desc">${step.desc}</div>
                 <div class="step-detail">${step.detail}</div>
                 <div class="tip-icon">${step.tip}</div>
             `;
-            grid.appendChild(card);
-        });
-        // добавим интерактив: клик по деталям с chrome://extensions копирует адрес (для обоих языков)
+            gridContainer.appendChild(card);
+        }
+
+        // Добавляем интерактив для копирования chrome://extensions (после отрисовки)
         document.querySelectorAll('.step-detail').forEach(el => {
-            if(el.innerText.includes('chrome://extensions')) {
+            if (el.innerText.includes('chrome://extensions')) {
                 el.classList.add('copy-hint');
                 el.style.cursor = 'pointer';
                 el.addEventListener('click', (e) => {
                     e.stopPropagation();
                     navigator.clipboard.writeText('chrome://extensions');
-                    showToast('✅ chrome://extensions copied / скопирован');
+                    showToast(currentLang === 'ru' ? '✅ chrome://extensions скопирован' : '✅ chrome://extensions copied');
                 });
             }
         });
     }
 
+    // обновление всех текстовых элементов (кроме шагов, рендерим их отдельно)
+    function updateStaticTexts(langCode) {
+        const t = translations[langCode];
+        if (!t) return;
+        document.getElementById('heroBadge').innerHTML = t.heroBadge;
+        document.getElementById('heroTitle').innerHTML = t.heroTitle;
+        document.getElementById('heroDesc').innerHTML = t.heroDesc;
+        
+        // info panel - но supportText имеет внутри span, обновим аккуратно
+        const supportDiv = document.getElementById('supportText');
+        supportDiv.innerHTML = t.supportText + ' <span id="extLinkSpan" style="cursor:pointer; background:#eef2ff; padding:0.2rem 0.7rem; border-radius:30px;">chrome://extensions</span> и режим разработчика.';
+        if (langCode === 'en') {
+            // для английского варианта добавим хвост "and Developer mode."
+            if (!supportDiv.innerHTML.includes('and Developer mode')) {
+                supportDiv.innerHTML = t.supportText + ' <span id="extLinkSpan" style="cursor:pointer; background:#eef2ff; padding:0.2rem 0.7rem; border-radius:30px;">chrome://extensions</span> and Developer mode.';
+            }
+        } else {
+            if (!supportDiv.innerHTML.includes('режим разработчика')) {
+                supportDiv.innerHTML = t.supportText + ' <span id="extLinkSpan" style="cursor:pointer; background:#eef2ff; padding:0.2rem 0.7rem; border-radius:30px;">chrome://extensions</span> и режим разработчика.';
+            }
+        }
+        // перепривязываем событие копирования для нового span
+        const extSpan = document.getElementById('extLinkSpan');
+        if (extSpan) {
+            extSpan.addEventListener('click', () => {
+                navigator.clipboard.writeText('chrome://extensions');
+                showToast(currentLang === 'ru' ? '✅ chrome://extensions скопирован' : '✅ chrome://extensions copied');
+            });
+        }
+
+        document.getElementById('chromeVersionText').innerHTML = t.chromeVersionText;
+        document.getElementById('faqTitle').innerHTML = t.faqTitle;
+        document.getElementById('faq1').innerHTML = t.faq1;
+        document.getElementById('faq2').innerHTML = t.faq2;
+        document.getElementById('faq3').innerHTML = t.faq3;
+        document.getElementById('faq4').innerHTML = t.faq4;
+        document.getElementById('footerText').innerHTML = t.footerText;
+        document.getElementById('footerNote').innerHTML = t.footerNote;
+    }
+
     function showToast(msg) {
-        let toast = document.createElement('div');
+        let existingToast = document.querySelector('.dynamic-toast');
+        if(existingToast) existingToast.remove();
+        const toast = document.createElement('div');
+        toast.className = 'dynamic-toast';
         toast.innerText = msg;
         toast.style.position = 'fixed';
         toast.style.bottom = '24px';
@@ -419,85 +457,53 @@
         setTimeout(() => toast.remove(), 2200);
     }
 
-    function updateUILanguage(lang) {
-        const t = translations[lang];
-        if (!t) return;
-        // обновляем hero
-        document.getElementById('heroBadge').innerHTML = t.heroBadge;
-        document.getElementById('heroTitle').innerHTML = t.heroTitle;
-        document.getElementById('heroDesc').innerHTML = t.heroDesc;
-        // info-panel
-        document.getElementById('supportText').innerHTML = t.supportText;
-        document.getElementById('chromeVersionText').innerHTML = t.chromeVersionText;
-        // faq
-        document.getElementById('faqTitle').innerHTML = t.faqTitle;
-        document.getElementById('faq1').innerHTML = t.faq1;
-        document.getElementById('faq2').innerHTML = t.faq2;
-        document.getElementById('faq3').innerHTML = t.faq3;
-        document.getElementById('faq4').innerHTML = t.faq4;
-        // footer
-        document.getElementById('footerText').innerHTML = t.footerText;
-        document.getElementById('footerNote').innerHTML = t.footerNote;
-        // перестраиваем шаги
-        buildSteps(t);
-        // также обновим активную кнопку
+    // Главная функция смены языка
+    function setLanguage(lang) {
+        if (lang !== 'ru' && lang !== 'en') return;
+        currentLang = lang;
+        const langData = translations[lang];
+        // обновляем тексты вне сетки
+        updateStaticTexts(lang);
+        // рендерим шаги заново
+        renderSteps(langData);
+        // отмечаем активную кнопку
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            if(btn.dataset.lang === lang) {
+            if (btn.getAttribute('data-lang') === lang) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
-        // маленький фикс для копирования на свежесозданных элементах - уже обработано в buildSteps
-    }
-
-    // инициализация и переключение языка
-    function setLanguage(lang) {
-        if (lang !== 'ru' && lang !== 'en') return;
-        currentLang = lang;
-        updateUILanguage(translations[lang]);
-        // сохраняем предпочтение в localStorage
         localStorage.setItem('chrome_plugin_lang', lang);
     }
 
-    // обработчики кнопок
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const lang = btn.dataset.lang;
-            if (lang === 'ru' || lang === 'en') {
-                setLanguage(lang);
-            }
-        });
-    });
-
-    // При загрузке - читаем сохраненный язык или определяем браузер (ru по умолчанию)
-    const savedLang = localStorage.getItem('chrome_plugin_lang');
-    if (savedLang && (savedLang === 'ru' || savedLang === 'en')) {
-        setLanguage(savedLang);
-    } else {
-        // проверка языка браузера (простая)
-        const browserLang = navigator.language || navigator.userLanguage;
-        if (browserLang && browserLang.toLowerCase().startsWith('en')) {
-            setLanguage('en');
+    // Инициализация и обработчики
+    function init() {
+        // Получаем сохраненный язык или определяем
+        const saved = localStorage.getItem('chrome_plugin_lang');
+        let initialLang = 'ru';
+        if (saved && (saved === 'ru' || saved === 'en')) {
+            initialLang = saved;
         } else {
-            setLanguage('ru');
+            const browserLang = (navigator.language || '').toLowerCase();
+            if (browserLang.startsWith('en')) initialLang = 'en';
         }
+        // Запускаем UI с нужным языком
+        setLanguage(initialLang);
+        
+        // Вешаем события на кнопки
+        const ruBtn = document.querySelector('.lang-btn[data-lang="ru"]');
+        const enBtn = document.querySelector('.lang-btn[data-lang="en"]');
+        if (ruBtn) ruBtn.addEventListener('click', () => setLanguage('ru'));
+        if (enBtn) enBtn.addEventListener('click', () => setLanguage('en'));
     }
-
-    // дополнительная фишка: копирование chrome://extensions из любого места где есть span
-    setTimeout(() => {
-        const allSpans = document.querySelectorAll('.support-text span');
-        allSpans.forEach(span => {
-            if(span.innerText.includes('chrome://extensions')) {
-                span.style.cursor = 'pointer';
-                span.style.textDecoration = 'underline dotted';
-                span.addEventListener('click', () => {
-                    navigator.clipboard.writeText('chrome://extensions');
-                    showToast(currentLang === 'ru' ? '✅ chrome://extensions скопирован' : '✅ chrome://extensions copied');
-                });
-            }
-        });
-    }, 100);
+    
+    // Запуск после полной загрузки DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 </script>
 </body>
 </html>
