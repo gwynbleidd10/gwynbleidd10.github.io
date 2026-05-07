@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Настройка плагина для Chrome | Пошаговое руководство (RU/EN)</title>
+    <!-- Google Fonts & простой сброс стилей -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* header с переключателем языков */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+        .lang-switch {
+            background: #ffffffcc;
+            backdrop-filter: blur(8px);
+            border-radius: 100px;
+            padding: 0.3rem;
+            display: inline-flex;
+            gap: 0.3rem;
+            border: 1px solid rgba(30, 90, 138, 0.2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .lang-btn {
+            border: none;
+            background: transparent;
+            padding: 0.45rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            color: #2c4c6e;
+        }
+        .lang-btn.active {
+            background: #1e5a8a;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .lang-btn:not(.active):hover {
+            background: #e2e8f0;
+            color: #0f3b5c;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3c72, #2b4e7a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: #eaeef3;
+            backdrop-filter: blur(4px);
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e5a8a;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(30, 92, 138, 0.2);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #2c4c6e;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.8rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 1.8rem 1.4rem 1.8rem;
+            box-shadow: 0 12px 28px -8px rgba(0, 32, 64, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 40px -12px rgba(0, 44, 75, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #1e5a8a;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 6px 12px -6px rgba(0,0,0,0.1);
+        }
+        .step-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            color: #0b2b3f;
+            line-height: 1.3;
+        }
+        .step-desc {
+            font-size: 0.95rem;
+            color: #2c4a6e;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+        .step-detail {
+            font-size: 0.85rem;
+            background: #eff3f8;
+            padding: 0.6rem 0.9rem;
+            border-radius: 1.2rem;
+            color: #1f5e8e;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            border-left: 3px solid #3b82f6;
+        }
+        .tip-icon {
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+            color: #5f7f9e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            margin-top: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e4edf5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .support-text {
+            font-weight: 500;
+            color: #1c4e76;
+        }
+        .support-text span {
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        .chrome-badge {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: #f0f4f9;
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+        }
+        .faq-block {
+            margin-top: 2rem;
+            background: #e9f0f5;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.8rem;
+            transition: all 0.1s;
+        }
+        .faq-title {
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+        .faq-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #5d748b;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 1.2rem 1rem 2rem;
+            }
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .step-card {
+                padding: 1.4rem;
+            }
+        }
+        .copy-hint {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="lang-bar">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="ru">🇷🇺 Русский</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+        </div>
+    </div>
+
+    <div class="hero">
+        <div class="badge" id="heroBadge">⚡ Официальное руководство</div>
+        <h1 id="heroTitle">Настройка плагина для Chrome<br>в 8 простых шагов</h1>
+        <p id="heroDesc">Установите расширение за 3 минуты и раскройте все возможности. Следуйте инструкции ниже.</p>
+    </div>
+
+    <!-- Сетка 8 шагов -->
+    <div class="steps-grid" id="stepsGrid">
+        <!-- Карточки будут заполняться динамически через JS, но для надежности оставим статическую разметку с data-атрибутами -->
+        <!-- 8 шагов: каждый содержит номер + уникальные ключи -->
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="support-text" id="supportText">
+            📖 <strong>Нужна помощь?</strong> Если у вас возникли сложности на любом из 8 шагов, проверьте:
+            <span>chrome://extensions</span> и режим разработчика.
+        </div>
+        <div class="chrome-badge">
+            <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="20" fill="#FBC02D" stroke="#fff" stroke-width="2"/>
+                <circle cx="24" cy="24" r="10" fill="#fff"/>
+                <path d="M24 14L38 14L31 24L24 14Z" fill="#E53935"/>
+                <path d="M24 14L10 14L17 24L24 14Z" fill="#4CAF50"/>
+                <path d="M17 24L31 24L24 34L17 24Z" fill="#FDD835"/>
+            </svg>
+            <span class="support-text" id="chromeVersionText" style="font-size: 0.85rem;">Поддерживается Chrome 88+</span>
+        </div>
+    </div>
+
+    <div class="faq-block" id="faqBlock">
+        <p class="faq-title" id="faqTitle">💬 Что ещё нужно знать о плагине?</p>
+        <div class="faq-grid" id="faqGrid">
+            <span id="faq1">✔ Работает в автономном режиме</span>
+            <span id="faq2">✔ Поддержка темной темы</span>
+            <span id="faq3">✔ Автоматические обновления (вручную через перезагрузку)</span>
+            <span id="faq4">✔ Не собирает личные данные</span>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footerText">© 2025 Chrome Plugin Guide · Бесплатный лендинг с инструкцией. Версия 2.0 · Все 8 шагов проверены.</p>
+        <p style="margin-top: 0.5rem;" id="footerNote">📎 Для публикации на GitHub Pages просто разместите этот файл как index.html</p>
+    </footer>
+</div>
+
+<script>
+    // Мультиязычный контент: русский / английский
+    const translations = {
+        ru: {
+            heroBadge: "⚡ Официальное руководство",
+            heroTitle: "Настройка плагина для Chrome<br>в 8 простых шагов",
+            heroDesc: "Установите расширение за 3 минуты и раскройте все возможности. Следуйте инструкции ниже.",
+            supportText: "📖 <strong>Нужна помощь?</strong> Если у вас возникли сложности на любом из 8 шагов, проверьте: <span>chrome://extensions</span> и режим разработчика.",
+            chromeVersionText: "Поддерживается Chrome 88+",
+            faqTitle: "💬 Что ещё нужно знать о плагине?",
+            faq1: "✔ Работает в автономном режиме",
+            faq2: "✔ Поддержка темной темы",
+            faq3: "✔ Автоматические обновления (вручную через перезагрузку)",
+            faq4: "✔ Не собирает личные данные",
+            footerText: "© 2025 Chrome Plugin Guide · Бесплатный лендинг с инструкцией. Версия 2.0 · Все 8 шагов проверены.",
+            footerNote: "📎 Для публикации на GitHub Pages просто разместите этот файл как index.html",
+            steps: [
+                { title: "Скачайте архив", desc: "Перейдите на официальную страницу плагина и загрузите последнюю версию расширения в формате <strong>.zip</strong> или <strong>.crx</strong>.", detail: "📁 Файл: \"chrome-plugin-v2.4.zip\"", tip: "💡 Совет: сохраните архив в удобную папку" },
+                { title: "Распакуйте файлы", desc: "Извлеките содержимое архива в отдельную папку. Убедитесь, что внутри есть <code>manifest.json</code> и другие ресурсы.", detail: "🗂️ Папка: \"my_chrome_extension\"", tip: "📌 Рекомендуется не удалять папку после установки" },
+                { title: "Откройте расширения Chrome", desc: "В адресной строке Chrome введите <strong>chrome://extensions</strong> или перейдите в меню: ⋮ → Дополнительные инструменты → Расширения.", detail: "🔧 Быстрый доступ: chrome://extensions/", tip: "⚡ Закрепите страницу для удобства" },
+                { title: "Включите «Режим разработчика»", desc: "На странице расширений найдите переключатель <strong>«Режим разработчика»</strong> (обычно в правом верхнем углу) и активируйте его.", detail: "🛠️ После включения появятся доп. кнопки", tip: "⚠️ Режим нужен для загрузки распакованного плагина" },
+                { title: "Загрузите распакованное расширение", desc: "Нажмите кнопку <strong>«Загрузить распакованное расширение»</strong> и выберите папку, которую вы создали на шаге 2.", detail: "📂 Выбрать папку с manifest.json", tip: "✅ Убедитесь, что нет вложенных папок с ошибками" },
+                { title: "Закрепите плагин на панели", desc: "После установки нажмите на иконку пазла <strong>🧩</strong> в правом верхнем углу Chrome, найдите плагин и закрепите его (значок булавки).", detail: "📍 Иконка будет всегда под рукой", tip: "🖱️ Клик правой кнопкой — дополнительные опции" },
+                { title: "Настройте параметры плагина", desc: "Кликните на иконку расширения → «Настройки» или «Options». Укажите необходимые API‑ключи, темы или права доступа (при необходимости).", detail: "⚙️ Сохраните изменения после конфигурации", tip: "🔒 Некоторые функции требуют перезагрузки вкладок" },
+                { title: "Проверьте работоспособность", desc: "Откройте любой сайт и протестируйте функции плагина. Убедитесь, что все кнопки работают и нет ошибок консоли (F12 → Console).", detail: "✅ Готово! Расширение успешно настроено.", tip: "🔄 При обновлении Chrome — повторить шаг подгрузки" }
+            ]
+        },
+        en: {
+            heroBadge: "⚡ Official Guide",
+            heroTitle: "Chrome Plugin Setup<br>in 8 Simple Steps",
+            heroDesc: "Install the extension in 3 minutes and unlock all features. Follow the instructions below.",
+            supportText: "📖 <strong>Need help?</strong> If you face any issues in any of the 8 steps, check: <span>chrome://extensions</span> and Developer mode.",
+            chromeVersionText: "Supports Chrome 88+",
+            faqTitle: "💬 What else should you know about the plugin?",
+            faq1: "✔ Works offline",
+            faq2: "✔ Dark theme support",
+            faq3: "✔ Automatic updates (manual reload required)",
+            faq4: "✔ No personal data collection",
+            footerText: "© 2025 Chrome Plugin Guide · Free landing page with instructions. Version 2.0 · All 8 steps verified.",
+            footerNote: "📎 To publish on GitHub Pages, simply place this file as index.html",
+            steps: [
+                { title: "Download the archive", desc: "Go to the official plugin page and download the latest version of the extension in <strong>.zip</strong> or <strong>.crx</strong> format.", detail: "📁 File: \"chrome-plugin-v2.4.zip\"", tip: "💡 Tip: save the archive to a convenient folder" },
+                { title: "Extract files", desc: "Unzip the archive contents into a separate folder. Make sure <code>manifest.json</code> and other resources are inside.", detail: "🗂️ Folder: \"my_chrome_extension\"", tip: "📌 It is recommended not to delete the folder after installation" },
+                { title: "Open Chrome Extensions", desc: "In Chrome's address bar, type <strong>chrome://extensions</strong> or go to menu: ⋮ → More tools → Extensions.", detail: "🔧 Quick access: chrome://extensions/", tip: "⚡ Pin the page for convenience" },
+                { title: "Enable Developer Mode", desc: "On the extensions page, find the <strong>Developer mode</strong> toggle (usually top right) and activate it.", detail: "🛠️ Additional buttons will appear after enabling", tip: "⚠️ Developer mode is required to load an unpacked extension" },
+                { title: "Load unpacked extension", desc: "Click the <strong>Load unpacked</strong> button and select the folder you created in step 2.", detail: "📂 Select folder with manifest.json", tip: "✅ Make sure there are no nested folders with errors" },
+                { title: "Pin the plugin to the toolbar", desc: "After installation, click the puzzle icon <strong>🧩</strong> in the top right corner of Chrome, find your plugin and pin it (pin icon).", detail: "📍 The icon will always be at hand", tip: "🖱️ Right-click for additional options" },
+                { title: "Configure plugin settings", desc: "Click on the extension icon → 'Settings' or 'Options'. Set required API keys, themes or permissions (if needed).", detail: "⚙️ Save changes after configuration", tip: "🔒 Some features may require reloading tabs" },
+                { title: "Test functionality", desc: "Open any website and test the plugin's features. Make sure all buttons work and there are no console errors (F12 → Console).", detail: "✅ Done! The extension is successfully configured.", tip: "🔄 When Chrome updates, repeat the loading step if needed" }
+            ]
+        }
+    };
+
+    let currentLang = 'ru';
+
+    function buildSteps(langData) {
+        const stepsArray = langData.steps;
+        const grid = document.getElementById('stepsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        stepsArray.forEach((step, idx) => {
+            const card = document.createElement('div');
+            card.className = 'step-card';
+            const number = idx + 1;
+            card.innerHTML = `
+                <div class="step-number">${number}</div>
+                <div class="step-title">${step.title}</div>
+                <div class="step-desc">${step.desc}</div>
+                <div class="step-detail">${step.detail}</div>
+                <div class="tip-icon">${step.tip}</div>
+            `;
+            grid.appendChild(card);
+        });
+        // добавим интерактив: клик по деталям с chrome://extensions копирует адрес (для обоих языков)
+        document.querySelectorAll('.step-detail').forEach(el => {
+            if(el.innerText.includes('chrome://extensions')) {
+                el.classList.add('copy-hint');
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText('chrome://extensions');
+                    showToast('✅ chrome://extensions copied / скопирован');
+                });
+            }
+        });
+    }
+
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.innerText = msg;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = '#1e5a8a';
+        toast.style.color = 'white';
+        toast.style.padding = '10px 22px';
+        toast.style.borderRadius = '40px';
+        toast.style.fontSize = '0.85rem';
+        toast.style.fontWeight = '500';
+        toast.style.zIndex = '1000';
+        toast.style.boxShadow = '0 6px 14px rgba(0,0,0,0.2)';
+        toast.style.backdropFilter = 'blur(4px)';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2200);
+    }
+
+    function updateUILanguage(lang) {
+        const t = translations[lang];
+        if (!t) return;
+        // обновляем hero
+        document.getElementById('heroBadge').innerHTML = t.heroBadge;
+        document.getElementById('heroTitle').innerHTML = t.heroTitle;
+        document.getElementById('heroDesc').innerHTML = t.heroDesc;
+        // info-panel
+        document.getElementById('supportText').innerHTML = t.supportText;
+        document.getElementById('chromeVersionText').innerHTML = t.chromeVersionText;
+        // faq
+        document.getElementById('faqTitle').innerHTML = t.faqTitle;
+        document.getElementById('faq1').innerHTML = t.faq1;
+        document.getElementById('faq2').innerHTML = t.faq2;
+        document.getElementById('faq3').innerHTML = t.faq3;
+        document.getElementById('faq4').innerHTML = t.faq4;
+        // footer
+        document.getElementById('footerText').innerHTML = t.footerText;
+        document.getElementById('footerNote').innerHTML = t.footerNote;
+        // перестраиваем шаги
+        buildSteps(t);
+        // также обновим активную кнопку
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        // маленький фикс для копирования на свежесозданных элементах - уже обработано в buildSteps
+    }
+
+    // инициализация и переключение языка
+    function setLanguage(lang) {
+        if (lang !== 'ru' && lang !== 'en') return;
+        currentLang = lang;
+        updateUILanguage(translations[lang]);
+        // сохраняем предпочтение в localStorage
+        localStorage.setItem('chrome_plugin_lang', lang);
+    }
+
+    // обработчики кнопок
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const lang = btn.dataset.lang;
+            if (lang === 'ru' || lang === 'en') {
+                setLanguage(lang);
+            }
+        });
+    });
+
+    // При загрузке - читаем сохраненный язык или определяем браузер (ru по умолчанию)
+    const savedLang = localStorage.getItem('chrome_plugin_lang');
+    if (savedLang && (savedLang === 'ru' || savedLang === 'en')) {
+        setLanguage(savedLang);
+    } else {
+        // проверка языка браузера (простая)
+        const browserLang = navigator.language || navigator.userLanguage;
+        if (browserLang && browserLang.toLowerCase().startsWith('en')) {
+            setLanguage('en');
+        } else {
+            setLanguage('ru');
+        }
+    }
+
+    // дополнительная фишка: копирование chrome://extensions из любого места где есть span
+    setTimeout(() => {
+        const allSpans = document.querySelectorAll('.support-text span');
+        allSpans.forEach(span => {
+            if(span.innerText.includes('chrome://extensions')) {
+                span.style.cursor = 'pointer';
+                span.style.textDecoration = 'underline dotted';
+                span.addEventListener('click', () => {
+                    navigator.clipboard.writeText('chrome://extensions');
+                    showToast(currentLang === 'ru' ? '✅ chrome://extensions скопирован' : '✅ chrome://extensions copied');
+                });
+            }
+        });
+    }, 100);
+</script>
+</body>
+</html>
