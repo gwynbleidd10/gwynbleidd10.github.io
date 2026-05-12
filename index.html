@@ -29,13 +29,16 @@
             padding: 0 24px;
         }
 
-        /* language switcher - минималистично, без шапки */
-        .lang-float {
+        /* верхняя панель: переключатель языка + кнопка доната */
+        .top-bar {
             display: flex;
             justify-content: flex-end;
+            align-items: center;
+            gap: 16px;
             padding: 20px 24px 0 24px;
             max-width: 1148px;
             margin: 0 auto;
+            flex-wrap: wrap;
         }
         .lang-switch {
             display: flex;
@@ -61,6 +64,24 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             font-weight: 600;
         }
+        .btn-donate {
+            background: #ff7a00;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-donate:hover {
+            background: #e06600;
+            transform: translateY(-2px);
+        }
 
         .btn-chrome {
             background: #1a73e8;
@@ -80,24 +101,6 @@
         .btn-chrome:hover {
             background: #0f5bc2;
             transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: white;
-            border: 1px solid #cbd5e1;
-            padding: 12px 28px;
-            border-radius: 48px;
-            font-weight: 600;
-            color: #1f2937;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-        .btn-outline:hover {
-            background: #f8fafc;
-            border-color: #94a3b8;
         }
 
         .hero {
@@ -127,8 +130,6 @@
             margin: 24px 0 16px;
         }
         
-        /* Убрали блок info-row полностью */
-
         h2 {
             font-size: 1.9rem;
             font-weight: 700;
@@ -137,7 +138,7 @@
         }
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
             margin: 28px 0 48px;
         }
@@ -148,6 +149,8 @@
             border: 1px solid #e9edf2;
             transition: all 0.2s;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
         .step-num {
             width: 34px;
@@ -186,66 +189,36 @@
             text-decoration: none;
             margin-top: 14px;
             transition: 0.2s;
+            width: fit-content;
         }
         .btn-download-step:hover {
             background: #e6edf5;
             border-color: #94a3b8;
             transform: translateY(-1px);
         }
-
-        .media-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            margin: 32px 0 40px;
-        }
-        .video-wrapper {
-            flex: 1;
-            min-width: 280px;
-            background: #0f172a;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.2);
-        }
-        .video-wrapper iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border: none;
-        }
-        .video-caption {
-            background: #0f172a;
-            color: #cbd5e1;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.85rem;
-        }
-        .screenshots {
-            flex: 1;
-            min-width: 260px;
-            background: #f9fafb;
-            border-radius: 28px;
-            padding: 20px;
+        .screenshot-inline {
+            margin-top: 20px;
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px;
             text-align: center;
             border: 1px solid #eef2ff;
         }
-        .screenshot-img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            background: #e2e8f0;
-            cursor: pointer;
+        .screenshot-inline img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
         }
-        .screenshot-caption {
-            margin-top: 14px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: #2c3e66;
+        .screenshot-inline p {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #4b5563;
         }
         footer {
             text-align: center;
             padding: 40px 0 48px;
             color: #6c757d;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             border-top: 1px solid #eef2f6;
             margin-top: 20px;
         }
@@ -253,17 +226,22 @@
             h1 { font-size: 2rem; }
             h2 { font-size: 1.55rem; }
             .container { padding: 0 20px; }
+            .top-bar { justify-content: center; }
+            .steps-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- Только переключатель языка — без шапки -->
-<div class="lang-float">
+<!-- Верхняя панель: переключатель языка + кнопка доната -->
+<div class="top-bar">
     <div class="lang-switch" id="langSwitch">
         <button class="lang-btn" data-lang="ru">Русский</button>
         <button class="lang-btn" data-lang="en">English</button>
     </div>
+    <a href="https://boosty.to/minare0/donate" target="_blank" class="btn-donate">
+        <i class="fas fa-heart"></i> <span data-i18n="donate_btn">Поддержать проект</span>
+    </a>
 </div>
 
 <main>
@@ -272,64 +250,49 @@
         <div class="hero">
             <h1>CCSCI — Canon Camera Shutter Count Information <span style="font-size: 1.6rem;">(Free info)</span></h1>
             <div class="subhead" data-i18n="hero_desc">
-                Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные. Расширение для Chrome + EOSMSG.
+                Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.
             </div>
             <div class="flex-buttons">
                 <a href="https://chromewebstore.google.com/detail/nhjmlhpdmoiiafakkejpmcfhcjfjcknp?utm_source=item-share-cb" target="_blank" class="btn-chrome">
                     <i class="fab fa-chrome"></i> <span data-i18n="install_btn">Установить расширение</span>
                 </a>
-                <a href="#steps" class="btn-outline">
-                    <i class="fas fa-list"></i> <span data-i18n="guide_btn">Инструкция</span>
-                </a>
             </div>
         </div>
 
-        <!-- Steps section (без верхнего блока с предупреждениями) -->
+        <!-- Steps section -->
         <h2 id="steps"><span data-i18n="steps_title">Пошаговая инструкция</span></h2>
         <div class="steps-grid" id="stepsGrid"></div>
-
-        <!-- Видео + скриншоты -->
-        <h2><span data-i18n="media_title">Видеоинструкция и скриншоты</span></h2>
-        <div class="media-grid">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/6ZfuNTqbHE8?rel=0" 
-                        title="CCSCI video instruction"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                </iframe>
-                <div class="video-caption" data-i18n="video_caption">🎥 Как подключить камеру и получить счётчик затвора</div>
-            </div>
-            <div class="screenshots">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 240'%3E%3Crect width='400' height='240' fill='%23244f9e'/%3E%3Ctext x='28' y='110' fill='white' font-size='18' font-weight='bold'%3ECCSCI Extension%3C/text%3E%3Ctext x='28' y='145' fill='#e0e7ff' font-size='14'%3ECamera: Canon EOS R6%3C/text%3E%3Ctext x='28' y='175' fill='#facc15' font-size='15'%3EShutter Count: 12480%3C/text%3E%3Ctext x='28' y='200' fill='#bfdbfe' font-size='12'%3ESerial: 1234567890%3C/text%3E%3C/svg%3E"
-                     alt="Screenshot example" class="screenshot-img" id="screenshotDemo">
-                <div class="screenshot-caption" data-i18n="screenshot_caption">
-                    Пример отображения: модель, количество срабатываний затвора и серийный номер
-                </div>
-                <p style="margin-top: 12px; font-size:0.78rem; color:#4b5563;" data-i18n="screenshot_note">
-                    Интерфейс расширения после нажатия Connect в EOSMSG
-                </p>
-            </div>
-        </div>
     </div>
 </main>
 
 <footer>
     <div class="container">
-        <p>© 2025 CCSCI — Free Canon Shutter Count Info | <span data-i18n="footer_disclaimer">Независимый инструмент, не аффилирован с Canon</span></p>
-        <p style="margin-top: 6px;" data-i18n="footer_support">Поддержка и обратная связь: через Chrome Web Store</p>
+        <p>CCSCI — Free Canon Shutter Count Info © 2024-<span id="currentYear"></span></p>
     </div>
 </footer>
 
 <script>
+    // Установка текущего года в футере
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+
     // ПРЯМАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ EOSMSG (ЗАМЕНИТЕ НА РЕАЛЬНУЮ)
     const EOSMSG_DOWNLOAD_URL = "https://example.com/download/eosmsg_setup.exe";  // <--- ВСТАВЬТЕ РЕАЛЬНУЮ ССЫЛКУ НА ФАЙЛ
     
-    // Тексты (без лишних блоков, без предупреждения про EOS Utility)
+    // Данные скриншота (одинаковый для обоих языков)
+    const screenshotHTML = `
+        <div class="screenshot-inline">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 450 270'%3E%3Crect width='450' height='270' fill='%23244f9e'/%3E%3Ctext x='30' y='70' fill='white' font-size='20' font-weight='bold'%3ECCSCI Extension%3C/text%3E%3Ctext x='30' y='110' fill='#e0e7ff' font-size='15'%3ECamera: Canon EOS R6%3C/text%3E%3Ctext x='30' y='145' fill='#facc15' font-size='16'%3EShutter Count: 12480%3C/text%3E%3Ctext x='30' y='180' fill='#bfdbfe' font-size='13'%3ESerial Number: 1234567890%3C/text%3E%3Ctext x='30' y='215' fill='#a5f3fc' font-size='12'%3EFirmware: 1.8.0%3C/text%3E%3C/svg%3E"
+                 alt="CCSCI camera info screenshot"
+                 style="width:100%; max-width:420px; display:block; margin:0 auto;">
+            <p data-i18n="screenshot_caption">📸 Пример отображения информации о камере: модель, счётчик затвора, серийный номер</p>
+        </div>
+    `;
+
+    // Тексты
     const translations = {
         ru: {
-            hero_desc: "Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные. Расширение для Chrome + EOSMSG.",
+            hero_desc: "Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.",
             install_btn: "Установить расширение",
-            guide_btn: "Инструкция",
             steps_title: "Пошаговая инструкция",
             step1_title: "Установите Canon EOS Utility",
             step1_text: "Скачайте с официального сайта Canon и установите EOS Utility (драйверы и связь с камерой).",
@@ -346,19 +309,14 @@
             step7_title: "Нажмите кнопку Connect",
             step7_text: "В главном окне EOSMSG нажмите большую кнопку Connect.",
             step8_title: "Готово!",
-            step8_text: "В браузере автоматически откроется страница расширения CCSCI с полной информацией о камере (счётчик срабатываний, модель и др.).",
+            step8_text: "В браузере автоматически откроется страница расширения CCSCI с полной информацией о камере.",
             download_eosmsg_btn: "⬇️ Скачать EOSMSG",
-            media_title: "Видеоинструкция и скриншоты",
-            video_caption: "🎥 Видео: как получить счётчик затвора Canon",
-            screenshot_caption: "Пример отображения: модель, количество срабатываний затвора и серийный номер",
-            screenshot_note: "Интерфейс расширения после нажатия Connect в EOSMSG",
-            footer_disclaimer: "Независимый инструмент, не аффилирован с Canon",
-            footer_support: "Поддержка и обратная связь: через Chrome Web Store"
+            screenshot_caption: "📸 Пример отображения информации о камере: модель, счётчик затвора, серийный номер",
+            donate_btn: "Поддержать проект"
         },
         en: {
-            hero_desc: "Free Canon camera info viewer: shutter count, serial number & more. Chrome extension + EOSMSG.",
+            hero_desc: "Free Canon camera info viewer: shutter count, serial number & more.",
             install_btn: "Install extension",
-            guide_btn: "Guide",
             steps_title: "Step-by-step guide",
             step1_title: "Install Canon EOS Utility",
             step1_text: "Download from Canon official website and install EOS Utility (drivers & camera communication).",
@@ -375,38 +333,33 @@
             step7_title: "Press Connect button",
             step7_text: "In the main EOSMSG window, click the large Connect button.",
             step8_title: "Done!",
-            step8_text: "Your browser will open the CCSCI extension page with full camera info (shutter count, model, etc.).",
+            step8_text: "Your browser will open the CCSCI extension page with full camera info.",
             download_eosmsg_btn: "⬇️ Download EOSMSG",
-            media_title: "Video guide & screenshots",
-            video_caption: "🎥 Video: how to get Canon shutter count",
-            screenshot_caption: "Example: camera model, shutter actuations, serial number",
-            screenshot_note: "Extension interface after clicking Connect in EOSMSG",
-            footer_disclaimer: "Independent tool, not affiliated with Canon",
-            footer_support: "Support & feedback via Chrome Web Store"
+            screenshot_caption: "📸 Example of camera info: model, shutter count, serial number",
+            donate_btn: "Support the project"
         }
     };
 
-    // Структура шагов: для 2-го пункта — кнопка загрузки вместо простой ссылки
     const stepsData = {
         ru: [
-            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false },
-            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn" },
-            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false },
-            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false },
-            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false },
-            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false },
-            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false },
-            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false }
+            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn", hasScreenshot: false },
+            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false, hasScreenshot: true }
         ],
         en: [
-            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false },
-            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn" },
-            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false },
-            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false },
-            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false },
-            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false },
-            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false },
-            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false }
+            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn", hasScreenshot: false },
+            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false, hasScreenshot: false },
+            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false, hasScreenshot: true }
         ]
     };
 
@@ -414,7 +367,6 @@
 
     function applyLanguage(lang) {
         currentLang = lang;
-        // Обновление всех элементов с data-i18n
         document.querySelectorAll("[data-i18n]").forEach(el => {
             const key = el.getAttribute("data-i18n");
             if (translations[lang] && translations[lang][key]) {
@@ -422,7 +374,6 @@
             }
         });
         renderSteps(lang);
-        // Активное состояние кнопок языка
         document.querySelectorAll(".lang-btn").forEach(btn => {
             if (btn.getAttribute("data-lang") === lang) {
                 btn.classList.add("active");
@@ -446,17 +397,31 @@
             let innerHtml = `<div class="step-num">${idx+1}</div>
                              <div class="step-title">${title}</div>
                              <div class="step-text">${description}`;
-            // Если нужна кнопка загрузки (для пункта 2)
             if (step.hasDownloadBtn && step.downloadUrl) {
                 const btnLabel = t[step.btnLabelKey] || "Download";
-                innerHtml += `<div style="margin-top: 14px;"><a href="${step.downloadUrl}" class="btn-download-step" target="_blank" rel="noopener noreferrer">
+                innerHtml += `<div><a href="${step.downloadUrl}" class="btn-download-step" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-download"></i> ${btnLabel}
                               </a></div>`;
             }
             innerHtml += `</div>`;
+            if (step.hasScreenshot) {
+                innerHtml += screenshotHTML;
+                // Обновляем текст подписи к скриншоту с учетом языка
+                setTimeout(() => {
+                    const caption = card.querySelector('.screenshot-inline p');
+                    if (caption && caption.getAttribute('data-i18n') === 'screenshot_caption') {
+                        caption.innerText = t.screenshot_caption;
+                    }
+                }, 0);
+            }
             card.innerHTML = innerHtml;
             container.appendChild(card);
         });
+        // Дополнительно обновляем текст подписи у скриншота в последнем шаге (если уже отрендерен)
+        const screenshotCaption = document.querySelector('.screenshot-inline p');
+        if (screenshotCaption && screenshotCaption.getAttribute('data-i18n') === 'screenshot_caption') {
+            screenshotCaption.innerText = translations[currentLang].screenshot_caption;
+        }
     }
 
     function detectLanguage() {
@@ -482,9 +447,8 @@
         });
     }
 
-    // Проверка: если URL заглушка — предупреждение в консоль, не на странице
     if (EOSMSG_DOWNLOAD_URL === "https://example.com/download/eosmsg_setup.exe") {
-        console.warn("⚠️ Замените EOSMSG_DOWNLOAD_URL на реальную ссылку файла EOSMSG (например, на ваш сервер или облачное хранилище).");
+        console.warn("⚠️ Замените EOSMSG_DOWNLOAD_URL на реальную ссылку файла EOSMSG.");
     }
     
     init();
