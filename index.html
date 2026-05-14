@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>CCSCI | Canon Camera Shutter Count</title>
+    
+    <!-- SEO мета-теги (английский приоритет для США) -->
+    <title>CCSCI — Canon Camera Shutter Count Information | Free Canon Shutter Count Checker</title>
+    <meta name="description" content="Free Chrome extension to check Canon camera shutter count, serial number, and other info. Supports mirrorless Canon EOS R and EOS M cameras. Completely free.">
+    <meta name="keywords" content="Canon shutter count, free shutter count, Canon EOS shutter count, mirrorless Canon, EOS R shutter count, Canon camera info, CCSCI, EOSMSG, free Chrome extension">
+    <meta name="author" content="CCSCI Project">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook (английский по умолчанию) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gwynbleidd10.github.io/">
+    <meta property="og:title" content="CCSCI — Canon Camera Shutter Count Information (Free)">
+    <meta property="og:description" content="Free Chrome extension to check Canon camera shutter count, serial number, and other info. Supports mirrorless Canon EOS R and EOS M cameras.">
+    <meta property="og:image" content="https://gwynbleidd10.github.io/og-image.png">
+    <meta property="og:site_name" content="CCSCI">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="ru_RU">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CCSCI — Free Canon Shutter Count Checker">
+    <meta name="twitter:description" content="Free Chrome extension to check Canon camera shutter count">
+    <meta name="twitter:image" content="https://gwynbleidd10.github.io/og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://gwynbleidd10.github.io/">
+    
+    <!-- Hreflang для мультиязычности (указываем Google, что есть русская и английская версии) -->
+    <link rel="alternate" hreflang="en" href="https://gwynbleidd10.github.io/">
+    <link rel="alternate" hreflang="ru" href="https://gwynbleidd10.github.io/?lang=ru">
+    <link rel="alternate" hreflang="x-default" href="https://gwynbleidd10.github.io/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231e3a8a'/%3E%3Ctext x='20' y='68' fill='white' font-size='48' font-weight='bold'%3ECC%3C/text%3E%3C/svg%3E">
+    
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -29,7 +64,6 @@
             padding: 0 24px;
         }
 
-        /* верхняя панель: переключатель языка + кнопка доната */
         .top-bar {
             display: flex;
             justify-content: flex-end;
@@ -168,6 +202,10 @@
             display: flex;
             flex-direction: column;
         }
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.12);
+        }
         .step-num {
             width: 34px;
             height: 34px;
@@ -231,39 +269,35 @@
 </head>
 <body>
 
-<!-- Верхняя панель: переключатель языка + кнопка доната -->
 <div class="top-bar">
     <div class="lang-switch" id="langSwitch">
-        <button class="lang-btn" data-lang="ru">Русский</button>
-        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="ru" aria-label="Russian language">Русский</button>
+        <button class="lang-btn" data-lang="en" aria-label="English language">English</button>
     </div>
-    <a href="https://boosty.to/minare0/donate" target="_blank" class="btn-donate">
-        <i class="fas fa-heart"></i> <span data-i18n="donate_btn">Поддержать проект</span>
+    <a href="https://boosty.to/minare0/donate" target="_blank" class="btn-donate" rel="noopener noreferrer">
+        <i class="fas fa-heart"></i> <span data-i18n="donate_btn">Support the project</span>
     </a>
 </div>
 
 <main>
     <div class="container">
-        <!-- Hero -->
         <div class="hero">
             <h1>CCSCI — Canon Camera Shutter Count Information <span style="font-size: 1.6rem;">(Free info)</span></h1>
             <div class="subhead" data-i18n="hero_desc">
-                Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.
+                Free Canon camera info viewer: shutter count, serial number & more.
             </div>
-            <!-- Уведомление о поддержке только беззеркальных камер -->
             <div class="compat-note">
-                <i class="fas fa-camera"></i>
-                <span data-i18n="compat_note">На текущий момент поддерживаются только беззеркальные камеры Canon (EOS R, EOS M и совместимые).</span>
+                <i class="fas fa-camera" aria-hidden="true"></i>
+                <span data-i18n="compat_note">Currently only mirrorless Canon cameras are supported (EOS R, EOS M series and compatible).</span>
             </div>
             <div class="flex-buttons">
-                <a href="https://chromewebstore.google.com/detail/nhjmlhpdmoiiafakkejpmcfhcjfjcknp?utm_source=item-share-cb" target="_blank" class="btn-chrome">
-                    <i class="fab fa-chrome"></i> <span data-i18n="install_btn">Установить расширение</span>
+                <a href="https://chromewebstore.google.com/detail/nhjmlhpdmoiiafakkejpmcfhcjfjcknp?utm_source=item-share-cb" target="_blank" class="btn-chrome" rel="noopener noreferrer">
+                    <i class="fab fa-chrome"></i> <span data-i18n="install_btn">Install extension</span>
                 </a>
             </div>
         </div>
 
-        <!-- Steps section -->
-        <h2 id="steps"><span data-i18n="steps_title">Пошаговая инструкция</span></h2>
+        <h2 id="steps"><span data-i18n="steps_title">Step-by-step guide</span></h2>
         <div class="steps-grid" id="stepsGrid"></div>
     </div>
 </main>
@@ -271,20 +305,43 @@
 <footer>
     <div class="container">
         <p>CCSCI — Free Canon Shutter Count Info © 2024-<span id="currentYear"></span></p>
+        <p style="margin-top: 12px; font-size: 0.75rem;">
+            <a href="https://chromewebstore.google.com/detail/nhjmlhpdmoiiafakkejpmcfhcjfjcknp" target="_blank" rel="noopener noreferrer" style="color:#6c757d; text-decoration:none;">Chrome Web Store</a> | 
+            <a href="https://boosty.to/minare0/donate" target="_blank" rel="noopener noreferrer" style="color:#6c757d; text-decoration:none;">Boosty</a>
+        </p>
     </div>
 </footer>
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CCSCI - Canon Camera Shutter Count Information",
+    "applicationCategory": "BrowserExtension",
+    "operatingSystem": "Chrome",
+    "url": "https://gwynbleidd10.github.io/",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "description": "Free Chrome extension to check Canon camera shutter count, serial number, and other info. Supports mirrorless Canon EOS R and EOS M cameras.",
+    "author": {
+        "@type": "Person",
+        "name": "CCSCI Project"
+    },
+    "softwareVersion": "1.0",
+    "inLanguage": ["en", "ru"]
+}
+</script>
+
 <script>
-    // Установка текущего года в футере
     document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-    // ПРЯМАЯ ССЫЛКА НА ФАЙЛ EOSMSG В ТОМ ЖЕ РЕПОЗИТОРИИ (GitHub Pages)
     const getEOSMSGUrl = () => {
-        const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
-        return baseUrl + 'EOSMSG_setup.exe';
+        return window.location.origin + '/eosmsg.exe';
     };
     
-    // Тексты (без скриншота)
     const translations = {
         ru: {
             hero_desc: "Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.",
@@ -306,7 +363,7 @@
             step7_title: "Нажмите кнопку Connect",
             step7_text: "В главном окне EOSMSG нажмите большую кнопку Connect.",
             step8_title: "Готово!",
-            step8_text: "В браузере автоматически откроется страница расширения CCSCI с полной информацией о камере.",
+            step8_text: "В браузере автоматически откроется страница расширения CCSCI с полной информацией о камере (счётчик срабатываний, модель и др.).",
             download_eosmsg_btn: "⬇️ Скачать EOSMSG",
             donate_btn: "Поддержать проект"
         },
@@ -330,7 +387,7 @@
             step7_title: "Press Connect button",
             step7_text: "In the main EOSMSG window, click the large Connect button.",
             step8_title: "Done!",
-            step8_text: "Your browser will open the CCSCI extension page with full camera info.",
+            step8_text: "Your browser will open the CCSCI extension page with full camera info (shutter count, model, etc.).",
             download_eosmsg_btn: "⬇️ Download EOSMSG",
             donate_btn: "Support the project"
         }
@@ -359,7 +416,7 @@
         ]
     };
 
-    let currentLang = "ru";
+    let currentLang = "en";
 
     function applyLanguage(lang) {
         currentLang = lang;
@@ -377,6 +434,7 @@
                 btn.classList.remove("active");
             }
         });
+        document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
     }
 
     function renderSteps(lang) {
@@ -396,7 +454,7 @@
             if (step.hasDownloadBtn && step.getDownloadUrl) {
                 const downloadUrl = step.getDownloadUrl();
                 const btnLabel = t[step.btnLabelKey] || "Download";
-                innerHtml += `<div><a href="${downloadUrl}" class="btn-download-step" target="_blank" rel="noopener noreferrer">
+                innerHtml += `<div><a href="${downloadUrl}" class="btn-download-step" download rel="noopener noreferrer">
                                 <i class="fas fa-download"></i> ${btnLabel}
                               </a></div>`;
             }
@@ -407,8 +465,13 @@
     }
 
     function detectLanguage() {
-        const lang = navigator.language || navigator.userLanguage;
-        if (lang.toLowerCase().startsWith("ru")) return "ru";
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        if (urlLang === 'ru') return 'ru';
+        if (urlLang === 'en') return 'en';
+        
+        const browserLang = navigator.language || navigator.userLanguage;
+        if (browserLang.toLowerCase().startsWith("ru")) return "ru";
         return "en";
     }
 
@@ -424,6 +487,9 @@
                 if (newLang === "ru" || newLang === "en") {
                     localStorage.setItem("ccsci_lang", newLang);
                     applyLanguage(newLang);
+                    const newUrl = new URL(window.location.href);
+                    newUrl.searchParams.set('lang', newLang);
+                    window.history.pushState({}, '', newUrl);
                 }
             });
         });
