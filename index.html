@@ -121,7 +121,23 @@
             font-size: 1.2rem;
             color: #334155;
             max-width: 720px;
-            margin-bottom: 32px;
+            margin-bottom: 16px;
+        }
+        .compat-note {
+            background: #fef9e3;
+            border-left: 4px solid #eab308;
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            color: #854d0e;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .compat-note i {
+            font-size: 1.2rem;
         }
         .flex-buttons {
             display: flex;
@@ -196,24 +212,6 @@
             border-color: #94a3b8;
             transform: translateY(-1px);
         }
-        .screenshot-inline {
-            margin-top: 20px;
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-            border: 1px solid #eef2ff;
-        }
-        .screenshot-inline img {
-            max-width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-        }
-        .screenshot-inline p {
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: #4b5563;
-        }
         footer {
             text-align: center;
             padding: 40px 0 48px;
@@ -252,6 +250,11 @@
             <div class="subhead" data-i18n="hero_desc">
                 Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.
             </div>
+            <!-- Уведомление о поддержке только беззеркальных камер -->
+            <div class="compat-note">
+                <i class="fas fa-camera"></i>
+                <span data-i18n="compat_note">На текущий момент поддерживаются только беззеркальные камеры Canon (EOS R, EOS M и совместимые).</span>
+            </div>
             <div class="flex-buttons">
                 <a href="https://chromewebstore.google.com/detail/nhjmlhpdmoiiafakkejpmcfhcjfjcknp?utm_source=item-share-cb" target="_blank" class="btn-chrome">
                     <i class="fab fa-chrome"></i> <span data-i18n="install_btn">Установить расширение</span>
@@ -275,23 +278,17 @@
     // Установка текущего года в футере
     document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-    // ПРЯМАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ EOSMSG (ЗАМЕНИТЕ НА РЕАЛЬНУЮ)
-    const EOSMSG_DOWNLOAD_URL = "/eosmsg.exe";  // <--- ВСТАВЬТЕ РЕАЛЬНУЮ ССЫЛКУ НА ФАЙЛ
+    // ПРЯМАЯ ССЫЛКА НА ФАЙЛ EOSMSG В ТОМ ЖЕ РЕПОЗИТОРИИ (GitHub Pages)
+    const getEOSMSGUrl = () => {
+        const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+        return baseUrl + 'EOSMSG_setup.exe';
+    };
     
-    // Данные скриншота (одинаковый для обоих языков)
-    const screenshotHTML = `
-        <div class="screenshot-inline">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 450 270'%3E%3Crect width='450' height='270' fill='%23244f9e'/%3E%3Ctext x='30' y='70' fill='white' font-size='20' font-weight='bold'%3ECCSCI Extension%3C/text%3E%3Ctext x='30' y='110' fill='#e0e7ff' font-size='15'%3ECamera: Canon EOS R6%3C/text%3E%3Ctext x='30' y='145' fill='#facc15' font-size='16'%3EShutter Count: 12480%3C/text%3E%3Ctext x='30' y='180' fill='#bfdbfe' font-size='13'%3ESerial Number: 1234567890%3C/text%3E%3Ctext x='30' y='215' fill='#a5f3fc' font-size='12'%3EFirmware: 1.8.0%3C/text%3E%3C/svg%3E"
-                 alt="CCSCI camera info screenshot"
-                 style="width:100%; max-width:420px; display:block; margin:0 auto;">
-            <p data-i18n="screenshot_caption">📸 Пример отображения информации о камере: модель, счётчик затвора, серийный номер</p>
-        </div>
-    `;
-
-    // Тексты
+    // Тексты (без скриншота)
     const translations = {
         ru: {
             hero_desc: "Бесплатный просмотр информации о камере Canon: пробег затвора, серийный номер и другие данные.",
+            compat_note: "На текущий момент поддерживаются только беззеркальные камеры Canon (EOS R, EOS M и совместимые).",
             install_btn: "Установить расширение",
             steps_title: "Пошаговая инструкция",
             step1_title: "Установите Canon EOS Utility",
@@ -311,11 +308,11 @@
             step8_title: "Готово!",
             step8_text: "В браузере автоматически откроется страница расширения CCSCI с полной информацией о камере.",
             download_eosmsg_btn: "⬇️ Скачать EOSMSG",
-            screenshot_caption: "📸 Пример отображения информации о камере: модель, счётчик затвора, серийный номер",
             donate_btn: "Поддержать проект"
         },
         en: {
             hero_desc: "Free Canon camera info viewer: shutter count, serial number & more.",
+            compat_note: "Currently only mirrorless Canon cameras are supported (EOS R, EOS M series and compatible).",
             install_btn: "Install extension",
             steps_title: "Step-by-step guide",
             step1_title: "Install Canon EOS Utility",
@@ -335,31 +332,30 @@
             step8_title: "Done!",
             step8_text: "Your browser will open the CCSCI extension page with full camera info.",
             download_eosmsg_btn: "⬇️ Download EOSMSG",
-            screenshot_caption: "📸 Example of camera info: model, shutter count, serial number",
             donate_btn: "Support the project"
         }
     };
 
     const stepsData = {
         ru: [
-            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn", hasScreenshot: false },
-            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false, hasScreenshot: true }
+            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false },
+            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, getDownloadUrl: getEOSMSGUrl, btnLabelKey: "download_eosmsg_btn" },
+            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false },
+            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false },
+            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false },
+            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false },
+            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false },
+            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false }
         ],
         en: [
-            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, downloadUrl: EOSMSG_DOWNLOAD_URL, btnLabelKey: "download_eosmsg_btn", hasScreenshot: false },
-            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false, hasScreenshot: false },
-            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false, hasScreenshot: true }
+            { titleKey: "step1_title", textKey: "step1_text", hasDownloadBtn: false },
+            { titleKey: "step2_title", textKey: "step2_text", hasDownloadBtn: true, getDownloadUrl: getEOSMSGUrl, btnLabelKey: "download_eosmsg_btn" },
+            { titleKey: "step3_title", textKey: "step3_text", hasDownloadBtn: false },
+            { titleKey: "step4_title", textKey: "step4_text", hasDownloadBtn: false },
+            { titleKey: "step5_title", textKey: "step5_text", hasDownloadBtn: false },
+            { titleKey: "step6_title", textKey: "step6_text", hasDownloadBtn: false },
+            { titleKey: "step7_title", textKey: "step7_text", hasDownloadBtn: false },
+            { titleKey: "step8_title", textKey: "step8_text", hasDownloadBtn: false }
         ]
     };
 
@@ -397,31 +393,17 @@
             let innerHtml = `<div class="step-num">${idx+1}</div>
                              <div class="step-title">${title}</div>
                              <div class="step-text">${description}`;
-            if (step.hasDownloadBtn && step.downloadUrl) {
+            if (step.hasDownloadBtn && step.getDownloadUrl) {
+                const downloadUrl = step.getDownloadUrl();
                 const btnLabel = t[step.btnLabelKey] || "Download";
-                innerHtml += `<div><a href="${step.downloadUrl}" class="btn-download-step" target="_blank" rel="noopener noreferrer">
+                innerHtml += `<div><a href="${downloadUrl}" class="btn-download-step" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-download"></i> ${btnLabel}
                               </a></div>`;
             }
             innerHtml += `</div>`;
-            if (step.hasScreenshot) {
-                innerHtml += screenshotHTML;
-                // Обновляем текст подписи к скриншоту с учетом языка
-                setTimeout(() => {
-                    const caption = card.querySelector('.screenshot-inline p');
-                    if (caption && caption.getAttribute('data-i18n') === 'screenshot_caption') {
-                        caption.innerText = t.screenshot_caption;
-                    }
-                }, 0);
-            }
             card.innerHTML = innerHtml;
             container.appendChild(card);
         });
-        // Дополнительно обновляем текст подписи у скриншота в последнем шаге (если уже отрендерен)
-        const screenshotCaption = document.querySelector('.screenshot-inline p');
-        if (screenshotCaption && screenshotCaption.getAttribute('data-i18n') === 'screenshot_caption') {
-            screenshotCaption.innerText = translations[currentLang].screenshot_caption;
-        }
     }
 
     function detectLanguage() {
@@ -445,10 +427,6 @@
                 }
             });
         });
-    }
-
-    if (EOSMSG_DOWNLOAD_URL === "https://example.com/download/eosmsg_setup.exe") {
-        console.warn("⚠️ Замените EOSMSG_DOWNLOAD_URL на реальную ссылку файла EOSMSG.");
     }
     
     init();
